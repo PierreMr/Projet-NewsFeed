@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 // Internal imports
 const router = require('./router.js')
 const config = require('./config.json')
+// const news = require('./news.js')
 
 // HTTP Server initialisation
 function initHttpServer() {
@@ -39,6 +40,8 @@ const wsServer = initWSServer()
 let clients = []
 
 wsServer.on('connection', (webSocket) => {
+    // console.log(news)
+
     console.log('WebSocket Server :: a new client has connected')
     webSocket.send(console.log('You are connected'))
 
@@ -47,7 +50,7 @@ wsServer.on('connection', (webSocket) => {
         clients = clients.filter((client) => client !== webSocket)
     }
     webSocket.onmessage = (message) => {
-        console.log('WebSocket :: got a new message', message.data)
+        // console.log('WebSocket :: got a new message', message.data)
     }
     clients.push(webSocket)
 })
