@@ -10,14 +10,14 @@ const config = require('./config.json')
 // HTTP Server initialisation
 function initHttpServer() {
     const server = express()
-    server.use(bodyParser.json())
-    server.use(router)
     server.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*')
         res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS')
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
         next()
     })
+    server.use(bodyParser.json())
+    server.use(router)
     return server
 }
 
@@ -40,7 +40,8 @@ let clients = []
 
 wsServer.on('connection', (webSocket) => {
     console.log('WebSocket Server :: a new client has connected')
-    
+    webSocket.send(console.log('You are connected'))
+
     webSocket.onclose = (event) => {
         console.log('WebSocket :: client disconnected')
         clients = clients.filter((client) => client !== webSocket)
